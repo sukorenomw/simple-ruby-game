@@ -39,36 +39,42 @@ while !input.eql? "exit"
 			gets
 		end
 	when "start"
-		#clear console
-		puts "\e[H\e[2J"
-		puts ""
-		puts "# ===================================== #"
-		puts "#         Welcome to Battle Arena       #"
-		puts "# ===================================== #"
-		puts "Battle Start:"
-		print "Who will attack: "
-
-		attName = gets.chomp
-		while !players.has_key?(attName)
-			puts "Player not found!"
+		if players.length < 2
+			puts "Minimum player to start battle is 2"
+			print "Press any key to continue..."
+			gets
+		else
+			#clear console
+			puts "\e[H\e[2J"
+			puts ""
+			puts "# ===================================== #"
+			puts "#         Welcome to Battle Arena       #"
+			puts "# ===================================== #"
+			puts "Battle Start:"
 			print "Who will attack: "
+
 			attName = gets.chomp
-		end
-		attacker = players.fetch(attName)
+			while !players.has_key?(attName)
+				puts "Player not found!"
+				print "Who will attack: "
+				attName = gets.chomp
+			end
+			attacker = players.fetch(attName)
 
-		print "Who get attacked: "
-		attName = gets.chomp
-		while !players.has_key?(attName)
-			puts "Player not found!"
-			print "Who will attack: "
+			print "Who get attacked: "
 			attName = gets.chomp
+			while !players.has_key?(attName)
+				puts "Player not found!"
+				print "Who will attack: "
+				attName = gets.chomp
+			end
+			victim = players.fetch(attName)
+
+			victim.setBlood(victim.blood - 20)
+
+			puts "Description:"
+			puts "#{attacker.name} : manna = #{attacker.manna}, blood = #{attacker.blood}"
+			puts "#{victim.name} : manna = #{victim.manna}, blood = #{victim.blood}"
 		end
-		victim = players.fetch(attName)
-
-		victim.setBlood(victim.blood - 20)
-
-		puts "Description:"
-		puts "#{attacker.name} : manna = #{attacker.manna}, blood = #{attacker.blood}"
-		puts "#{victim.name} : manna = #{victim.manna}, blood = #{victim.blood}"
 	end
 end
